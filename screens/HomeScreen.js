@@ -1,8 +1,10 @@
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, ScrollView } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import * as Icon from 'react-native-feather'
+import { themeColors } from '../theme'
+import Categories from '../components/categories'
 
 export default function HomeScreen() {
   return (
@@ -18,11 +20,18 @@ export default function HomeScreen() {
             <Text className='text-gray-600'>New York, NYC</Text>
           </View>
         </View>
-      </View>
-      <View className='p-3 gray-300 rounded-full'>
+        <View style={{backgroundColor: themeColors.bgColor(1)}} className='p-3 gray-300 rounded-full'>
         <Icon.Sliders height='20'width='20'strokeWidth={2.5} stroke='white'/>
       </View>
-      <Text>HomeScreen</Text>
+      </View>
+      {/* main */}
+      <ScrollView showsVerticalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingBottom: 20
+      }}>
+        {/* categories */}
+        <Categories />
+      </ScrollView>
     </SafeAreaView>
   )
 }
