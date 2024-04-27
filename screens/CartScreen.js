@@ -30,7 +30,7 @@ export default function CartScreen() {
         className="flex-row px-4 items-center"
       >
         <Image
-          source={require("../assets/images/yellow-shopping-cart-10905.png")}
+          source={require("../assets/images/fast-food-delivery-12982.png")}
           className="w-20 h-20 rounded-full"
         />
         <Text className="flex-1 pl-4">Deliver in 20-30 minutes</Text>
@@ -93,6 +93,7 @@ export default function CartScreen() {
          </View>
          <View>
             <TouchableOpacity
+            onPress={()=>navigation.navigate('OrderPreparing')}
             style={{backgroundColor: themeColors.bgColor(2)}}
             className='p-3 rounded-full'>
                <Text className='text-white text-center font-bold text-lg'>Place Order</Text>
