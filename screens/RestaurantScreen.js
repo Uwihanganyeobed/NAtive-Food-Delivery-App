@@ -12,13 +12,13 @@ export default function RestaurantScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
   let item = params;
-  // console.log('restaurant',item)
-  const dispatch=useDispatch();
-  useEffect(()=>{
-    if(item && item.id){
-      dispatch(setRestaurant(...item))
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setRestaurant(item)); // Dispatch the entire item object
     }
-  },[])
+  }, []);
   return (
     <View>
       <CartIcon/>
