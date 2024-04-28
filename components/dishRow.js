@@ -1,19 +1,21 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
-import { themeColors } from '../theme'
-import * as Icon from 'react-native-feather'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../slices/cartSlice'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import { themeColors } from "../theme";
+import * as Icon from "react-native-feather";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart,removeFromCart, selectCartItemsById } from "../slices/cartSlice";
 
 export default function DishRow({ item }) {
+  const dispatch = useDispatch();
+  
+  const totalItems =useSelector(state=> selectCartItemsById(state, item.id))
 
-  const dispatch=useDispatch();
-  const handleIncrease=()=>{
-    dispatch(addToCart({...item}))
-  }
-  const handleDecrease=()=>{
-    dispatch(removeFromCart({id: item.id}))
-  }
+  const handleIncrease = () => {
+    dispatch(addToCart({ ...item }));
+  };
+  const handleDecrease = () => {
+    dispatch(removeFromCart({ id: item.id }));
+  };
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={item.image} />
@@ -25,25 +27,42 @@ export default function DishRow({ item }) {
         <View style={styles.priceContainer}>
           <Text style={styles.price}>${item.price}</Text>
           <View style={styles.quantityContainer}>
-            <TouchableOpacity onPress={handleDecrease} style={styles.quantityButton}>
-              <Icon.Minus strokeWidth={2} height={20} width={20} stroke={'white'} />
+            <TouchableOpacity
+              onPress={handleDecrease}
+              style={styles.quantityButton}
+              disabled={!totalItems.length}
+            >
+              <Icon.Minus
+                strokeWidth={2}
+                height={20}
+                width={20}
+                stroke={"white"}
+              />
             </TouchableOpacity>
-            <Text style={styles.quantityText}>2</Text>
-            <TouchableOpacity onPress={handleIncrease} style={styles.quantityButton}>
-              <Icon.Plus strokeWidth={2} height={20} width={20} stroke={'white'} />
+            <Text style={styles.quantityText}>{totalItems.length}</Text>
+            <TouchableOpacity
+              onPress={handleIncrease}
+              style={styles.quantityButton}
+            >
+              <Icon.Plus
+                strokeWidth={2}
+                height={20}
+                width={20}
+                stroke={"white"}
+              />
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 20,
     shadowColor: themeColors.bgColor(0.2),
@@ -64,9 +83,9 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginLeft: 15,
   },
   textContainer: {
@@ -74,23 +93,23 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   description: {
-    color: 'gray',
+    color: "gray",
   },
   priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   price: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: themeColors.text,
   },
   quantityContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 20,
   },
   quantityButton: {
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16,
   },
-})
+});
 
 // import { View, Text,Image, TouchableOpacity } from 'react-native'
 // import React from 'react'
