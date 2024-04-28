@@ -3,11 +3,12 @@ import React from 'react'
 import { themeColors } from '../theme'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux';
-import { selectCartItems } from '../slices/cartSlice';
+import { selectCartItems, selectCartTotal } from '../slices/cartSlice';
 
 export default function CartIcon() {
    const navigation=useNavigation();
    const cartItems=useSelector(selectCartItems);
+   const cartTotal=useSelector(selectCartTotal);
    if(!cartItems.length) return;
   return (
     <View style={styles.container}>
@@ -16,10 +17,10 @@ export default function CartIcon() {
         style={[styles.cartButton, { backgroundColor: themeColors.bgColor(1) }]}
       >
         <View style={styles.countContainer}>
-          <Text style={styles.countText}>3</Text>
+          <Text style={styles.countText}>{cartItems.length}</Text>
         </View>
         <Text style={styles.viewCartText}>View Cart</Text>
-        <Text style={styles.totalPriceText}>${23}</Text>
+        <Text style={styles.totalPriceText}>${cartTotal}</Text>
       </TouchableOpacity>
     </View>
   )
