@@ -1,30 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: 0,
+  items: [],
 }
 
-export const cartSlice = createSlice({
-  name: 'counter',
+export const carttSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
+    addToCart: (state, action) => {
+      state.items = [...state.items, action.payload]
     },
-    decrement: (state) => {
-      state.value -= 1
+    removeFromCart: (state, action) => {
+      let newCart = [...state.items];
+      let itemIndex=[...state.items.findIndex(item=> item.id== action.payload.id)];
+      if(itemIndex>=0){
+         newCart.splice(itemIndex,1);
+      }
+      else{
+         console.log('Cant remove item from cart');
+      }
+      state.items = newCart;
     },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    emptyCart: (state, action) => {
+      state.items = [];
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = cartSlice.actions
+export const { addToCart,removeFromCart,emptyCart } = carttSlice.actions;
 
-export default cartSlice.reducer
+export const selectCartItems = state => state.cart.items;
+
+export const selectCartItemsById = (state, id) => state.cart.items.filter(item=> item.id==id);
+
+export const selectCartTotal = state => state.cart.items.reduce((total, item)=> total=total+item.price, 0);
+
+export default carttSlice.reducer

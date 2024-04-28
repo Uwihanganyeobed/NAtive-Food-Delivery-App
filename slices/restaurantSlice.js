@@ -1,30 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  value: 0,
+  restaurant: null,
 }
 
 export const restaurantSlice = createSlice({
-  name: 'counter',
+  name: 'restaurant',
   initialState,
   reducers: {
-    increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
-    },
-    decrement: (state) => {
-      state.value -= 1
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload
+    setRestaurant: (state, action) => {
+      state.restaurant += action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = restaurantSlice.actions
+export const { setRestaurant } = restaurantSlice.actions;
 
+export const selectRestaurant = state => state.restaurant.restaurant;
 export default restaurantSlice.reducer
