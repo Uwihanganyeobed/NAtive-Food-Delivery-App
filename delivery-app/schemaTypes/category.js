@@ -12,7 +12,7 @@ export default defineType({
     }),
     defineField({
       name: 'description',
-      title: 'Description'
+      title: 'Description',
       type: 'text',
     }),
   ],
