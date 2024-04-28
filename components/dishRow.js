@@ -2,8 +2,18 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { themeColors } from '../theme'
 import * as Icon from 'react-native-feather'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../slices/cartSlice'
 
 export default function DishRow({ item }) {
+
+  const dispatch=useDispatch();
+  const handleIncrease=()=>{
+    dispatch(addToCart({...item}))
+  }
+  const handleDecrease=()=>{
+    dispatch(removeFromCart({id: item.id}))
+  }
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={item.image} />
@@ -15,11 +25,11 @@ export default function DishRow({ item }) {
         <View style={styles.priceContainer}>
           <Text style={styles.price}>${item.price}</Text>
           <View style={styles.quantityContainer}>
-            <TouchableOpacity style={styles.quantityButton}>
+            <TouchableOpacity onPress={handleDecrease} style={styles.quantityButton}>
               <Icon.Minus strokeWidth={2} height={20} width={20} stroke={'white'} />
             </TouchableOpacity>
             <Text style={styles.quantityText}>2</Text>
-            <TouchableOpacity style={styles.quantityButton}>
+            <TouchableOpacity onPress={handleIncrease} style={styles.quantityButton}>
               <Icon.Plus strokeWidth={2} height={20} width={20} stroke={'white'} />
             </TouchableOpacity>
           </View>
