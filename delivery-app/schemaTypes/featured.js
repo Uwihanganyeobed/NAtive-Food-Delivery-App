@@ -15,7 +15,7 @@ export default defineType({
     name: 'description',
     type: 'string',
     title: 'Description',
-    validation: rule=>rule.mac(200)
+    validation: rule=>rule.max(200)
    },
    {
     name: 'restaurants',
