@@ -31,11 +31,11 @@ export default function HomeScreen() {
             <Text className='text-gray-600'>New York, NYC</Text>
           </View>
         </View>
-        <View style={{backgroundColor: themeColors.bgColor(1)}} className='p-3 gray-300 rounded-full'>
+        {/* <View style={{backgroundColor: themeColors.bgColor(1)}} className='p-3 gray-300 rounded-full'> */}
         {/* <Icon.Sliders height='20'width='20'strokeWidth={2.5} stroke='white'/> */}
-        <Image
+        <Image source={require('../assets/user.jpg')} style={{width: 40, height: 50, borderRadius: 15}} />
       </View>
-      </View>
+      {/* </View> */}
       {/* main */}
       <ScrollView showsVerticalScrollIndicator={false}
       contentContainerStyle={{
