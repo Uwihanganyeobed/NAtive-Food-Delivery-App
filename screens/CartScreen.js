@@ -6,29 +6,32 @@ import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
-import { removeFromCart, selectCartItems, selectCartTotal } from "../slices/cartSlice";
+import {
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../slices/cartSlice";
 import { urlFor } from "../sanity";
 
 export default function CartScreen() {
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
-  const cartItems=useSelector(selectCartItems);
-  const cartTotal=useSelector(selectCartTotal);
-  const deliveryFee=2;
-  const dispatch=useDispatch();
-  const [groupedItems, setGroupedItems]=useState({});
-  useEffect(()=>{
-    const items=cartItems.reduce((group, item)=>{
-      if(group[item._id]){
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const deliveryFee = 2;
+  const dispatch = useDispatch();
+  const [groupedItems, setGroupedItems] = useState({});
+  useEffect(() => {
+    const items = cartItems.reduce((group, item) => {
+      if (group[item._id]) {
         group[item._id].push(item);
-      }
-      else{
-        group[item._id]=[item]
+      } else {
+        group[item._id] = [item];
       }
       return group;
-    },{})
+    }, {});
     setGroupedItems(items);
-  },[cartItems])
+  }, [cartItems]);
   return (
     <View className="bg-white flex-1">
       {/* back-button */}
@@ -70,7 +73,7 @@ export default function CartScreen() {
         className="bg-white pt-5"
       >
         {Object.entries(groupedItems).map(([key, items]) => {
-          let dish=items[0];
+          let dish = items[0];
           return (
             <View
               key={key}
@@ -79,7 +82,10 @@ export default function CartScreen() {
               <Text className="font-bold " style={{ color: themeColors.text }}>
                 {items.length} x
               </Text>
-              <Image className="h-14 w-14 rounded-full" source={{uri: urlFor(dish.image).url()}} />
+              <Image
+                className="h-14 w-14 rounded-full"
+                source={{ uri: urlFor(dish.image).url() }}
+              />
               <Text className="flex-1 font-bold text-gray-700">
                 {dish.name}
               </Text>
@@ -87,7 +93,7 @@ export default function CartScreen() {
               <TouchableOpacity
                 className="p-1 rounded-full"
                 style={{ backgroundColor: themeColors.bgColor(1) }}
-                onPress={()=>dispatch(removeFromCart({id: dish._id}))}
+                onPress={() => dispatch(removeFromCart({ id: dish._id }))}
               >
                 <Icon.Minus
                   strokeWidth={2}
@@ -101,27 +107,36 @@ export default function CartScreen() {
         })}
       </ScrollView>
       {/* totals */}
-      <View className='p-6 px-8 rounded-t-3xl space-y-4'style={{backgroundColor: themeColors.bgColor(0.2)}}>
-         <View className='flex-row justify-between '>
-            <Text className='text-gray-700'>Subtotal</Text>
-            <Text className='text-gray-700'>${cartTotal}</Text>
-         </View>
-         <View className='flex-row justify-between '>
-            <Text className='text-gray-700'>Delivery Fee</Text>
-            <Text className='text-gray-700'>${deliveryFee}</Text>
-         </View>
-         <View className='flex-row justify-between '>
-            <Text className='text-gray-700 font-extrabold'>Order Total</Text>
-            <Text className='text-gray-700 font-extrabold'>${deliveryFee+cartTotal}</Text>
-         </View>
-         <View>
-            <TouchableOpacity
-            onPress={()=>navigation.navigate('OrderPreparing')}
-            style={{backgroundColor: themeColors.bgColor(2)}}
-            className='p-3 rounded-full'>
-               <Text className='text-white text-center font-bold text-lg'>Place Order</Text>
-            </TouchableOpacity>
-         </View>
+
+      <View
+        className="p-6 px-8 rounded-t-3xl space-y-4"
+        style={{ backgroundColor: themeColors.bgColor(0.2) }}
+      >
+        <View className="flex-row justify-between ">
+          <Text className="text-gray-700">Subtotal</Text>
+          <Text className="text-gray-700">${cartTotal}</Text>
+        </View>
+        <View className="flex-row justify-between ">
+          <Text className="text-gray-700">Delivery Fee</Text>
+          <Text className="text-gray-700">${deliveryFee}</Text>
+        </View>
+        <View className="flex-row justify-between ">
+          <Text className="text-gray-700 font-extrabold">Order Total</Text>
+          <Text className="text-gray-700 font-extrabold">
+            ${deliveryFee + cartTotal}
+          </Text>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("OrderPreparing")}
+            style={{ backgroundColor: themeColors.bgColor(2) }}
+            className="p-3 rounded-full"
+          >
+            <Text className="text-white text-center font-bold text-lg">
+              Place Order
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -325,4 +340,3 @@ export default function CartScreen() {
 //     fontSize: 16,
 //   },
 // });
-

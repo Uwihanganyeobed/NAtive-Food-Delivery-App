@@ -1,9 +1,9 @@
-import sanityClient from './sanity';
+import sanityClient from "./sanity";
 
-let sanityQuery= (query, params) => sanityClient.fetch(query,params);
+let sanityQuery = (query, params) => sanityClient.fetch(query, params);
 
-export const getFeaturedRestaurants=()=>{
-   return sanityQuery(`
+export const getFeaturedRestaurants = () => {
+  return sanityQuery(`
    *[_type== 'featured']{
       ...,
       restaurants[]->{
@@ -17,15 +17,16 @@ export const getFeaturedRestaurants=()=>{
       }
     }
    `)
-}
+};
 
-export const getCategories=()=>{
-   return sanityQuery(`
+export const getCategories = () => {
+  return sanityQuery(`
    *[_type== 'category']
-   `)
-}
-export const getFeaturedRestaurantById = id=>{
-   return sanityQuery(`
+   `);
+};
+export const getFeaturedRestaurantById = (id) => {
+  return sanityQuery(
+    `
    *[_type== 'featured' && _id== '$id]{
       ...,
       restaurants[]->{
@@ -35,5 +36,7 @@ export const getFeaturedRestaurantById = id=>{
          }
       }
    }[0]
-   `, {id})
-}
+   `,
+    { id }
+  );
+};

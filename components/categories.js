@@ -1,34 +1,48 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 // import { categories } from '../constants';
-import { getCategories } from '../api';
-import { urlFor } from '../sanity';
+import { getCategories } from "../api";
+import { urlFor } from "../sanity";
 
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
   let [categories, setCategories] = useState([]);
-  useEffect(()=>{
-    getCategories().then(data=>{
-      setCategories(data)
-    })
-  },[])
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContent}>
+        contentContainerStyle={styles.scrollViewContent}
+      >
         {categories.map((category, index) => {
           const isActive = category._id === activeCategory;
-          const btnClass = isActive ? styles.activeButton : styles.inactiveButton;
+          const btnClass = isActive
+            ? styles.activeButton
+            : styles.inactiveButton;
           const textClass = isActive ? styles.activeText : styles.inactiveText;
           return (
             <View key={index} style={styles.categoryContainer}>
               <TouchableOpacity
                 onPress={() => setActiveCategory(category._id)}
-                style={[styles.button, btnClass]}>
-                <Image style={styles.image} source={{uri: urlFor(category.image).url()}} />
+                style={[styles.button, btnClass]}
+              >
+                <Image
+                  style={styles.image}
+                  source={{ uri: urlFor(category.image).url() }}
+                />
               </TouchableOpacity>
               <Text style={textClass}>{category.name}</Text>
             </View>
@@ -47,20 +61,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   categoryContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
     marginRight: 6,
   },
   button: {
     padding: 8,
     borderRadius: 100,
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
   },
   activeButton: {
-    backgroundColor: 'gray',
+    backgroundColor: "gray",
   },
   inactiveButton: {
-    backgroundColor: 'lightgray',
+    backgroundColor: "lightgray",
   },
   image: {
     width: 45,
@@ -68,16 +82,14 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: 'gray',
+    fontWeight: "bold",
+    color: "gray",
   },
   inactiveText: {
     fontSize: 14,
-    color: 'gray',
+    color: "gray",
   },
 });
-
-
 
 // import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
 // import React, { useState } from 'react'
