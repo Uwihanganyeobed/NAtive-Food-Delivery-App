@@ -1,5 +1,5 @@
-import  {sanityClient}  from "@sanity/client";
-let sanityQuery= (query, params)=> sanityClient.fetch(query,params);
+import { SanityClient } from "@sanity/client";
+let sanityQuery= (query, params)=> SanityClient.fetch(query,params);
 
 export const getFeaturedRestaurants=()=>{
    return sanityQuery(`
