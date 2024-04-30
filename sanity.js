@@ -5,7 +5,7 @@ const client = sanityClient({
    projectId: 'fsqvugh4',
    dataset: 'production',
    useCdn: true,
-   apiVersion: '2021-10-21'
+   apiVersion: '2021-10-21',
 });
 
 const builder = imageBuilder(client);
