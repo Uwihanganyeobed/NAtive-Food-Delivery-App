@@ -3,6 +3,7 @@ import React from 'react'
 import * as Icon from 'react-native-feather'
 import { themeColors } from '../theme'
 import { useNavigation } from '@react-navigation/native'
+import { urlFor } from '../sanity'
 
 export default function RestaurantCard({ item }) {
   const navigation=useNavigation();
@@ -12,13 +13,13 @@ export default function RestaurantCard({ item }) {
      >
       <View style={styles.cardContainer}>
         <View style={styles.cardContent}>
-          <Image style={styles.image} source={item.image} />
+          <Image style={styles.image} source={{uri: urlFor(item.image).url()}} />
           <View style={styles.textContainer}>
             <Text style={styles.name}>{item.name}</Text>
             <View style={styles.ratingContainer}>
               <Image source={require('../assets/images/star-7207.png')} style={styles.starIcon} />
               <Text style={styles.rating}>{item.stars}</Text>
-              <Text style={styles.reviews}>({item.reviews} review). <Text style={styles.category}>{item.category}</Text></Text>
+              <Text style={styles.reviews}>({item.reviews} review). <Text style={styles.category}>{item?.type?.name}</Text></Text>
             </View>
             <View style={styles.addressContainer}>
               <Icon.MapPin color='gray' width={15} height={15} />

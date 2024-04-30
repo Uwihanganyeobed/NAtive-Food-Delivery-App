@@ -1,14 +1,15 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { categories } from '../constants';
+// import { categories } from '../constants';
 import { getCategories } from '../api';
+import { urlFor } from '../sanity';
 
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
-
+  let [categories, setCategories] = useState([]);
   useEffect(()=>{
     getCategories().then(data=>{
-      console.log(`Got data: `,data);
+      setCategories(data)
     })
   },[])
 
@@ -19,15 +20,15 @@ export default function Categories() {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContent}>
         {categories.map((category, index) => {
-          const isActive = category.id === activeCategory;
+          const isActive = category._id === activeCategory;
           const btnClass = isActive ? styles.activeButton : styles.inactiveButton;
           const textClass = isActive ? styles.activeText : styles.inactiveText;
           return (
             <View key={index} style={styles.categoryContainer}>
               <TouchableOpacity
-                onPress={() => setActiveCategory(category.id)}
+                onPress={() => setActiveCategory(category._id)}
                 style={[styles.button, btnClass]}>
-                <Image style={styles.image} source={category.image} />
+                <Image style={styles.image} source={{uri: urlFor(category.image).url()}} />
               </TouchableOpacity>
               <Text style={textClass}>{category.name}</Text>
             </View>

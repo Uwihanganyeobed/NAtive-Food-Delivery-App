@@ -9,7 +9,7 @@ export const getFeaturedRestaurants=()=>{
       restaurants[]->{
         ...,
         dishes[]->{
-    ...
+          ...
       },
         type->{
         name
