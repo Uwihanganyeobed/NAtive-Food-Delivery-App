@@ -1,4 +1,4 @@
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { Image, View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import React from 'react'
 import * as Icon from 'react-native-feather'
 import { themeColors } from '../theme'
