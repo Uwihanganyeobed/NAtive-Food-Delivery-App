@@ -22,7 +22,7 @@ export const cartSlice = createSlice({
     emptyCart: (state, action) => {
       state.items = [];
     },
-  },
+  }
 });
 
 // Action creators are generated for each case reducer function
