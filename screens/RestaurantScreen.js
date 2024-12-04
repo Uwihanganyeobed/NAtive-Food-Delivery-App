@@ -9,17 +9,23 @@ import { StatusBar } from "expo-status-bar";
 import { useDispatch } from "react-redux";
 import { setRestaurant } from "../slices/restaurantSlice";
 import { urlFor } from "../sanity";
+
 export default function RestaurantScreen() {
   const { params } = useRoute();
   const navigation = useNavigation();
-  let item = params;
+  const item = params;
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (item && item._id) {
       dispatch(setRestaurant(item)); // Dispatch the entire item object
     }
-  }, []);
+  }, [item]);
+
+  if (!item) {
+    return <Text>No restaurant data available.</Text>; // Fallback UI
+  }
+
   return (
     <View>
       <CartIcon />

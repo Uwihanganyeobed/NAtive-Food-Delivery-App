@@ -6,9 +6,13 @@ import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
 
 export default function CartIcon() {
   const navigation = useNavigation();
-  const cartItems = useSelector(selectCartItems);
-  const cartTotal = useSelector(selectCartTotal);
-  if (!cartItems.length) return;
+  const cartItems = useSelector(selectCartItems) || [];
+  const cartTotal = useSelector(selectCartTotal) || 0;
+
+  if (!cartItems.length) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -19,7 +23,7 @@ export default function CartIcon() {
           <Text style={styles.countText}>{cartItems.length}</Text>
         </View>
         <Text style={styles.viewCartText}>View Cart</Text>
-        <Text style={styles.totalPriceText}>${cartTotal}</Text>
+        <Text style={styles.totalPriceText}>${cartTotal.toFixed(2)}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -73,23 +77,3 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-
-// import { View, Text, TouchableOpacity } from 'react-native'
-// import React from 'react'
-// import { themeColors } from '../theme'
-
-// export default function CartIcon() {
-//   return (
-//     <View className='absolute botoom-5 w-full z-50'>
-//       <TouchableOpacity
-//       style={{backgroundColor: themeColors.bgColor(1)}}
-//       className='flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-lg'>
-//          <View className='p-2 px-4 rounded-full'style={{backgroundColor: 'regba(255,255,255,0.3)'}}>
-//             <Text className='font-extrabold text-white text-lg'>3</Text>
-//          </View>
-//          <Text className='flex-1 text-center font-extrabold text-white text-lg'>View cart</Text>
-//          <Text className='font-extrabold text-white text-lg'>${23}</Text>
-//       </TouchableOpacity>
-//     </View>
-//   )
-// }

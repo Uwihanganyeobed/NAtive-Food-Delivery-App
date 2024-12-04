@@ -1,13 +1,13 @@
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import * as Icon from "react-native-feather";
-import { featured } from "../constants";
-import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { themeColors } from "../theme";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../slices/restaurantSlice";
 import { emptyCart } from "../slices/cartSlice";
+import { useNavigation } from "@react-navigation/native";
+
 export default function DeliveryScreen() {
   const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
@@ -17,6 +17,11 @@ export default function DeliveryScreen() {
     navigation.navigate("Home");
     dispatch(emptyCart());
   };
+
+  if (!restaurant) {
+    return <Text>No restaurant selected.</Text>; // Fallback UI
+  }
+
   return (
     <View className="flex-1">
       {/* map view */}
@@ -64,7 +69,7 @@ export default function DeliveryScreen() {
         >
           <View
             className="p-1 rounded-full"
-            style={{ backgroundColor: "rbga(255,255,255,0.4)" }}
+            style={{ backgroundColor: "rgba(255,255,255,0.4)" }}
           >
             <Image
               className="h-16 w-16 rounded-full"

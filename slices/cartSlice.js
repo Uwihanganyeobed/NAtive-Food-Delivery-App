@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 
 const initialState = {
   items: [],
@@ -21,7 +22,7 @@ export const cartSlice = createSlice({
         console.log("Cannot remove item from cart");
       }
     },
-    emptyCart: (state, action) => {
+    emptyCart: (state) => {
       state.items = [];
     },
   },
@@ -35,7 +36,9 @@ export const selectCartItems = (state) => state.cart.items;
 export const selectCartItemsById = (state, id) =>
   state.cart.items.filter((item) => item._id == id);
 
-export const selectCartTotal = (state) =>
-  state.cart.items.reduce((total, item) => total + item.price, 0);
+export const selectCartTotal = createSelector(
+  [selectCartItems],
+  (items) => items.reduce((total, item) => total + item.price, 0)
+);
 
 export default cartSlice.reducer;

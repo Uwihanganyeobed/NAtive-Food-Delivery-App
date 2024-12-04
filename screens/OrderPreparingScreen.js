@@ -5,11 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 export default function OrderPreparingScreen() {
   const navigation = useNavigation();
   useEffect(() => {
-    setTimeout(() => {
-      // move to delivery SCreen
+    const timer = setTimeout(() => {
+      // move to delivery Screen
       navigation.navigate("Delivery");
     }, 3000);
+    return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
+
   return (
     <View className="flex-1 bg-white justify-center items-center">
       <Image
